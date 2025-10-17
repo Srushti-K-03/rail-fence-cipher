@@ -1,0 +1,38 @@
+def rail_fence_encrypt(text, key):
+    rail = [''] * key
+    row, step = 0, 1
+
+    for char in text:
+        rail[row] += char
+        if row == 0:
+            step = 1
+        elif row == key - 1:
+            step = -1
+        row += step
+
+    return ''.join(rail)
+
+def rail_fence_decrypt(cipher, key):
+    pattern = list(range(key)) + list(range(key - 2, 0, -1))
+    indexes = [pattern[i % len(pattern)] for i in range(len(cipher))]
+    counts = [indexes.count(i) for i in range(key)]
+
+    rails, pos = [], 0
+    for count in counts:
+        rails.append(cipher[pos:pos + count])
+        pos += count
+
+    rail_pos = [0] * key
+    result = ''
+    for i in indexes:
+        result += rails[i][rail_pos[i]]
+        rail_pos[i] += 1
+
+    return result
+
+text = input("Enter text: ")
+key = int(input("Enter key (number of rails): "))
+
+encrypted = rail_fence_encrypt(text, key)
+print("Encrypted Text:", encrypted)
+print("Decrypted Text:", rail_fence_decrypt(encrypted, key))
