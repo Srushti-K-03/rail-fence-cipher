@@ -25,5 +25,3 @@ Ciphertext → `HOLELWRDLO`
 
 Input: HELLOWORLD
 Output: HOLELWRDLO
-
-Made with ❤️ for CNS Assignment
